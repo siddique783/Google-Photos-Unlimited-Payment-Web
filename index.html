@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পার্সোনাল অ্যাকাউন্ট</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #fce4ec;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 28px 24px 32px;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .app-icon {
+            background: #e6005c;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .app-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .app-title span {
+            font-weight: 400;
+            color: #6b7280;
+            font-size: 14px;
+            display: block;
+            margin-top: 1px;
+        }
+
+        .badge {
+            margin-left: auto;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .badge:hover {
+            background: #c8e6c9;
+            transform: scale(1.05);
+        }
+
+        .qr-section {
+            background: #fafbfc;
+            border-radius: 24px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #eef0f3;
+            margin-bottom: 22px;
+        }
+
+        .qr-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        #qrCode {
+            width: 170px;
+            height: 170px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #qrCode img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-hint {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #9ca3af;
+            background: #f3f4f6;
+            padding: 6px 14px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+
+        .input-group label small {
+            font-weight: 400;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            background: #fafbfc;
+            transition: all 0.2s;
+            outline: none;
+            color: #1a1a2e;
+        }
+
+        .input-group input:focus {
+            border-color: #e6005c;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(230, 0, 92, 0.06);
+        }
+
+        .input-group input::placeholder {
+            color: #b0b8c4;
+            font-weight: 400;
+            font-size: 15px;
+        }
+
+        .input-group input:disabled {
+            background: #f3f4f6;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .input-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            background: #fafbfc;
+            transition: all 0.2s;
+            outline: none;
+            color: #1a1a2e;
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+        }
+
+        .input-group select:focus {
+            border-color: #e6005c;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(230, 0, 92, 0.06);
+        }
+
+        .input-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #e6005c;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(230, 0, 92, 0.25);
+            margin-top: 4px;
+        }
+
+        .btn-submit:hover {
+            background: #cc0052;
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 16px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.25);
+            display: none;
+            margin-top: 4px;
+        }
+
+        .btn-continue.show {
+            display: block;
+        }
+
+        .btn-continue:hover {
+            background: #1557b0;
+            transform: translateY(-1px);
+        }
+
+        .timer-area {
+            margin-top: 20px;
+            background: #f8f9fc;
+            border-radius: 18px;
+            padding: 16px 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid #eef0f3;
+        }
+
+        .timer-area.show {
+            display: flex;
+        }
+
+        .timer-text {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a2e;
+            background: white;
+            padding: 2px 18px;
+            border-radius: 40px;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .timer-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .status-msg {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-msg.show {
+            display: flex;
+        }
+
+        .status-msg.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .status-msg.info {
+            background: #e3f2fd;
+            color: #0d47a1;
+            border: 1px solid #bbdefb;
+        }
+
+        .status-msg.error {
+            background: #fce4ec;
+            color: #c62828;
+            border: 1px solid #f8bbd0;
+        }
+
+        .app-footer {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f2f5;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        .app-footer .secure {
+            color: #4caf50;
+            font-weight: 500;
+        }
+
+        #qrFileInput {
+            display: none;
+        }
+
+        @media (max-width: 420px) {
+            .card {
+                padding: 20px 16px 24px;
+            }
+            #qrCode {
+                width: 140px;
+                height: 140px;
+            }
+            .timer-text {
+                font-size: 26px;
+                min-width: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+
+        <div class="app-header">
+            <div class="app-icon">B</div>
+            <div class="app-title">
+                সেন্ড মানি
+                <span>পার্সোনাল অ্যাকাউন্ট</span>
+            </div>
+            <button class="badge" id="liveBadge">● লাইভ</button>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-label">পার্সোনাল কিউআর কোড</div>
+            <div id="qrCode">
+                <img id="qrImage" src="qr" alt="QR Code">
+            </div>
+            <div class="qr-hint">🔹 স্ক্যান করে পেমেন্ট করুন</div>
+        </div>
+
+        <input type="file" id="qrFileInput" accept="image/*">
+
+        <div class="input-group">
+            <label>সিলেক্ট করুন</label>
+            <select id="selectOption" required>
+                <option value="">-- একটি অপশন বেছে নিন --</option>
+                <option value="1100">Google Photos Unlimited (Android)</option>
+                <option value="1200">Google Photos Unlimited (Windows10)</option>
+                <option value="2000">Google Photos Unlimited (Win10, Android)</option>
+            </select>
+            <div class="input-footer">
+                <span>📋 আপনার পছন্দ</span>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label>টাকার পরিমাণ </label>
+            <input type="number" id="amountInput" placeholder="সিলেক্ট করুন" autocomplete="off" min="0" step="1" readonly>
+            <div class="input-footer">
+                <span>💰 পরিমাণ (টাকা)</span>
+                <span id="amountLabel">অটো-ফিল</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>ট্রানজেকশন আইডি দিন</label>
+            <input type="text" id="txnInput" placeholder="আপনার ট্রানজেকশন আইডি লিখুন" autocomplete="off" spellcheck="false">
+            <div class="input-footer">
+                <span>🔑 লেনদেন নম্বর</span>
+                <span class="char-count" id="charCount">০ অক্ষর</span>
+            </div>
+        </div>
+
+        <button class="btn-submit" id="submitBtn">✅ সাবমিট করুন</button>
+
+        <div class="timer-area" id="timerArea">
+            <span>⏳</span>
+            <span class="timer-label">অপেক্ষা করুন</span>
+            <span class="timer-text" id="timerDisplay">৫</span>
+            <span class="timer-label">সেকেন্ড</span>
+        </div>
+
+        <button class="btn-continue" id="continueBtn">➡️ কন্টিনিউ</button>
+
+        <div class="status-msg" id="statusMsg">
+            <span class="emoji">✅</span>
+            <span id="statusText">লেনদেন সফল হয়েছে</span>
+        </div>
+
+        <div class="app-footer">
+            <span class="secure">🔒 এনক্রিপ্টেড সংযোগ</span>
+            <span>B v3.2</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            
+// সব ফরমেট অটো ডিটেক্ট
+const imageFormats = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'bmp', 'ico'];
+let currentFormatIndex = 0;
+
+function loadQRImage() {
+    const qrImage = document.getElementById('qrImage');
+    const format = imageFormats[currentFormatIndex];
+    qrImage.src = `qr.${format}`;
+    
+    qrImage.onerror = function() {
+        currentFormatIndex++;
+        if (currentFormatIndex < imageFormats.length) {
+            loadQRImage();
+        } else {
+            // কোনো ফাইল নেই
+            this.style.display = 'none';
+            this.parentElement.innerHTML = `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;"><rect width="120" height="120" fill="#ffffff" rx="8"/><path d="M25 25H45V45H25zM65 25H85V45H65zM25 65H45V85H25zM65 65H85V85H65z" fill="#1a1a2e"/><rect x="45" y="45" width="10" height="10" fill="#ffffff"/><rect x="55" y="35" width="10" height="10" fill="#1a1a2e"/><rect x="35" y="55" width="10" height="10" fill="#1a1a2e"/><rect x="85" y="55" width="10" height="10" fill="#ffffff"/><rect x="55" y="85" width="10" height="10" fill="#1a1a2e"/><rect x="35" y="35" width="10" height="10" fill="#ffffff"/><circle cx="88" cy="88" r="6" fill="#ffffff"/></svg>`;
+        }
+    };
+}
+
+// পেজ লোড হলে কল করুন
+document.addEventListener('DOMContentLoaded', loadQRImage);
+            // DOM elements
+            const qrContainer = document.getElementById('qrCode');
+            const qrFileInput = document.getElementById('qrFileInput');
+            const liveBadge = document.getElementById('liveBadge');
+            const amountInput = document.getElementById('amountInput');
+            const amountLabel = document.getElementById('amountLabel');
+            const selectOption = document.getElementById('selectOption');
+            const txnInput = document.getElementById('txnInput');
+            const charCount = document.getElementById('charCount');
+            const submitBtn = document.getElementById('submitBtn');
+            const continueBtn = document.getElementById('continueBtn');
+            const timerArea = document.getElementById('timerArea');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const statusMsg = document.getElementById('statusMsg');
+            const statusText = document.getElementById('statusText');
+
+            // ====== NEW: Google Drive Links for each option ======
+            const driveLinks = {
+                '1100': 'https://drive.google.com/file/d/1qHbjIe_Ak9VpmRptE_t5gjOPsy9xWrRL/view?usp=drivesdk',
+                '1200': 'https://drive.google.com/file/d/1FJuYiRwvz0mtDzatulppwUummkwpFqEd/view?usp=drivesdk',
+                '2000': 'https://drive.google.com/drive/folders/1BX2m9h6Qf6-TJjLr2WRgqYoX2wAtEKIa'
+            };
+            
+            let selectedLink = '';
+
+            // State
+            let countdownInterval = null;
+            let timeLeft = 5;
+            let isCountingDown = false;
+            let countdownFinished = false;
+
+            // ---------- Auto-fill amount based on selection + Save Link ----------
+            selectOption.addEventListener('change', function() {
+                const value = this.value;
+                if (value && driveLinks[value]) {
+                    // Set amount
+                    amountInput.value = value;
+                    const text = this.options[this.selectedIndex].text;
+                    amountLabel.textContent = '💰 ' + text;
+                    
+                    // Save the link
+                    selectedLink = driveLinks[value];
+                    console.log('✅ লিংক সেট হয়েছে:', selectedLink);
+                } else {
+                    amountInput.value = '';
+                    amountLabel.textContent = 'অটো-ফিল';
+                    selectedLink = '';
+                }
+            });
+
+            // ---------- QR change via gallery ----------
+            liveBadge.addEventListener('click', function() {
+                qrFileInput.click();
+            });
+
+            qrFileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        qrContainer.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.alt = 'QR Code';
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        img.style.objectFit = 'contain';
+                        qrContainer.appendChild(img);
+                        showStatus('✅', 'QR কোড পরিবর্তন করা হয়েছে!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+                qrFileInput.value = '';
+            });
+
+            // ---------- Character counter ----------
+            txnInput.addEventListener('input', function() {
+                const len = this.value.length;
+                charCount.textContent = len + ' অক্ষর';
+                charCount.style.color = (len === 10) ? '#2e7d32' : '#6b7280';
+            });
+
+            // ---------- Show Status ----------
+            function showStatus(emoji, text, type) {
+                statusMsg.className = 'status-msg show ' + type;
+                document.querySelector('.status-msg .emoji').textContent = emoji;
+                statusText.textContent = text;
+                clearTimeout(window.statusTimeout);
+                window.statusTimeout = setTimeout(() => {
+                    statusMsg.classList.remove('show');
+                }, 5000);
+            }
+
+            // ---------- Clear Timer ----------
+            function clearTimer() {
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+                isCountingDown = false;
+                countdownFinished = false;
+                timerArea.classList.remove('show');
+                timeLeft = 5;
+                timerDisplay.textContent = timeLeft;
+                submitBtn.disabled = false;
+                continueBtn.classList.remove('show');
+            }
+
+            // ---------- Start Countdown ----------
+            function startCountdown() {
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+
+                timeLeft = 5;
+                timerDisplay.textContent = timeLeft;
+                timerArea.classList.add('show');
+                continueBtn.classList.remove('show');
+                countdownFinished = false;
+                isCountingDown = true;
+                submitBtn.disabled = true;
+
+                showStatus('⏳', 'লেনদেন প্রক্রিয়াকরণ হচ্ছে...', 'info');
+
+                countdownInterval = setInterval(() => {
+                    timeLeft -= 1;
+                    timerDisplay.textContent = timeLeft;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                        isCountingDown = false;
+                        countdownFinished = true;
+                        timerDisplay.textContent = '০';
+                        submitBtn.disabled = true;
+                        continueBtn.classList.add('show');
+                        showStatus('✅', 'লেনদেন সফল! এখন কন্টিনিউ করুন।', 'success');
+                    }
+                }, 1000);
+            }
+
+            // ---------- Handle Submit ----------
+            function handleSubmit() {
+                const amount = amountInput.value.trim();
+                const selected = selectOption.value;
+                const txn = txnInput.value.trim();
+
+                // Check if option selected
+                if (!selected) {
+                    showStatus('❌', 'একটি অপশন বেছে নিন', 'error');
+                    selectOption.focus();
+                    return;
+                }
+
+                // Check if amount is set
+                if (!amount || parseFloat(amount) <= 0) {
+                    showStatus('❌', 'টাকার পরিমাণ সেট হয়নি', 'error');
+                    return;
+                }
+
+                // Check transaction ID (exactly 10 characters)
+                if (txn.length !== 10) {
+                    showStatus('❌', 'ট্রানজেকশন আইডি ভুল হয়েছে', 'error');
+                    txnInput.focus();
+                    return;
+                }
+
+                // If countdown is running
+                if (isCountingDown) {
+                    showStatus('⏳', 'অপেক্ষা করুন...', 'info');
+                    return;
+                }
+
+                // If countdown finished, restart
+                if (countdownFinished) {
+                    clearTimer();
+                    startCountdown();
+                    return;
+                }
+
+                // Start new countdown
+                startCountdown();
+            }
+
+            // ---------- Handle Continue (UPDATED) ----------
+            function handleContinue() {
+                if (selectedLink) {
+                    window.open(selectedLink, '_blank');
+                    showStatus('📂', 'গুগল ড্রাইভে যাচ্ছি...', 'success');
+                } else {
+                    showStatus('❌', 'প্রথমে একটি অপশন বেছে নিন', 'error');
+                }
+            }
+
+            // ---------- Event Listeners ----------
+            submitBtn.addEventListener('click', handleSubmit);
+            continueBtn.addEventListener('click', handleContinue);
+
+            // Enter key on inputs
+            txnInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    submitBtn.click();
+                }
+            });
+
+            // ---------- Cleanup ----------
+            window.addEventListener('beforeunload', function() {
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                }
+            });
+
+            // ---------- Initial state ----------
+            timerArea.classList.remove('show');
+            continueBtn.classList.remove('show');
+            submitBtn.disabled = false;
+            timerDisplay.textContent = '৫';
+            charCount.textContent = '০ অক্ষর';
+
+            // Demo transaction ID for placeholder
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let demoId = '';
+            for (let i = 0; i < 10; i++) {
+                demoId += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            txnInput.placeholder = 'যেমন: ' + demoId;
+
+            // Check if qr.png exists, if not show default SVG
+            const qrImage = document.getElementById('qrImage');
+            qrImage.onerror = function() {
+                this.style.display = 'none';
+                this.parentElement.innerHTML = `
+                    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                        <rect width="120" height="120" fill="#ffffff" rx="8"/>
+                        <path d="M25 25H45V45H25zM65 25H85V45H65zM25 65H45V85H25zM65 65H85V85H65z" fill="#1a1a2e"/>
+                        <rect x="45" y="45" width="10" height="10" fill="#ffffff"/>
+                        <rect x="55" y="35" width="10" height="10" fill="#1a1a2e"/>
+                        <rect x="35" y="55" width="10" height="10" fill="#1a1a2e"/>
+                        <rect x="85" y="55" width="10" height="10" fill="#ffffff"/>
+                        <rect x="55" y="85" width="10" height="10" fill="#1a1a2e"/>
+                        <rect x="35" y="35" width="10" height="10" fill="#ffffff"/>
+                        <circle cx="88" cy="88" r="6" fill="#ffffff"/>
+                    </svg>
+                `;
+            };
+
+            // For testing - log to console
+            console.log('✅ পেজ লোড হয়েছে। সবকিছু ঠিকঠাক কাজ করবে!');
+            console.log('📌 প্রতিটি অপশনের জন্য আলাদা লিংক সেট করা হয়েছে।');
+        })();
+    </script>
+</body>
+</html>
