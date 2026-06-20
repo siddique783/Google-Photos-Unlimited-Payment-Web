@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পার্সোনাল অ্যাকাউন্ট</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #fce4ec;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            transition: background 0.3s;
+        }
+
+        body.nagad-theme {
+            background: #e6f2ff;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 100%;
+            padding: 28px 24px 32px;
+            border-radius: 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: all 0.3s;
+            position: relative;
+            border-radius: 30px
+        }
+
+        body.nagad-theme .card {
+            border: 1px solid #e31e24;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(227, 30, 36, 0.15);
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f0f2f5;
+            position: relative;
+        }
+
+        .app-icon {
+            background: #e6005c;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        body.nagad-theme .app-icon {
+            background: #e31e24;
+        }
+
+        .app-icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .app-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .app-title span {
+            font-weight: 400;
+            color: #6b7280;
+            font-size: 14px;
+            display: block;
+            margin-top: 1px;
+        }
+
+        body.nagad-theme .app-title span {
+            color: #e31e24;
+        }
+
+        .badge {
+            margin-left: auto;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .badge:hover {
+            background: #c8e6c9;
+            transform: scale(1.05);
+        }
+
+        body.nagad-theme .badge {
+            background: #fce4ec;
+            color: #e31e24;
+        }
+
+        .qr-section {
+            background: #fafbfc;
+            border-radius: 24px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #eef0f3;
+            margin-bottom: 22px;
+        }
+
+        body.nagad-theme .qr-section {
+            border-color: #e31e24;
+        }
+
+        .qr-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        body.nagad-theme .qr-label {
+            color: #e31e24;
+        }
+
+        #qrCode {
+            width: 170px;
+            height: 170px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #qrCode img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-hint {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #9ca3af;
+            background: #f3f4f6;
+            padding: 6px 14px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        body.nagad-theme .qr-hint {
+            background: #e31e24;
+            color: white;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+
+        .input-group label small {
+            font-weight: 400;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            background: #fafbfc;
+            transition: all 0.2s;
+            outline: none;
+            color: #1a1a2e;
+        }
+
+        body.nagad-theme .input-group input:focus {
+            border-color: #e31e24;
+            box-shadow: 0 0 0 4px rgba(227, 30, 36, 0.06);
+        }
+
+        .input-group input:focus {
+            border-color: #e6005c;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(230, 0, 92, 0.06);
+        }
+
+        .input-group input::placeholder {
+            color: #b0b8c4;
+            font-weight: 400;
+            font-size: 15px;
+        }
+
+        .input-group input:disabled {
+            background: #f3f4f6;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .input-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            background: #fafbfc;
+            transition: all 0.2s;
+            outline: none;
+            color: #1a1a2e;
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+        }
+
+        body.nagad-theme .input-group select:focus {
+            border-color: #e31e24;
+            box-shadow: 0 0 0 4px rgba(227, 30, 36, 0.06);
+        }
+
+        .input-group select:focus {
+            border-color: #e6005c;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(230, 0, 92, 0.06);
+        }
+
+        .input-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #e6005c;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(230, 0, 92, 0.25);
+            margin-top: 4px;
+        }
+
+        body.nagad-theme .btn-submit {
+            background: #e31e24;
+            box-shadow: 0 6px 20px rgba(227, 30, 36, 0.25);
+        }
+
+        .btn-submit:hover {
+            background: #cc0052;
+            transform: translateY(-1px);
+        }
+
+        body.nagad-theme .btn-submit:hover {
+            background: #c91a20;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 16px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.25);
+            display: none;
+            margin-top: 4px;
+        }
+
+        body.nagad-theme .btn-continue {
+            background: #e31e24;
+            box-shadow: 0 6px 20px rgba(227, 30, 36, 0.25);
+        }
+
+        body.nagad-theme .btn-continue:hover {
+            background: #c91a20;
+        }
+
+        .btn-continue.show {
+            display: block;
+        }
+
+        .btn-continue:hover {
+            background: #1557b0;
+            transform: translateY(-1px);
+        }
+
+        .timer-area {
+            margin-top: 20px;
+            background: #f8f9fc;
+            border-radius: 18px;
+            padding: 16px 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid #eef0f3;
+        }
+
+        body.nagad-theme .timer-area {
+            border-color: #e31e24;
+        }
+
+        .timer-area.show {
+            display: flex;
+        }
+
+        .timer-text {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a2e;
+            background: white;
+            padding: 2px 18px;
+            border-radius: 40px;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        body.nagad-theme .timer-text {
+            color: #e31e24;
+        }
+
+        .timer-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .status-msg {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-msg.show {
+            display: flex;
+        }
+
+        .status-msg.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        body.nagad-theme .status-msg.success {
+            background: #e8f5e9;
+            border-color: #a5d6a7;
+        }
+
+        .status-msg.info {
+            background: #e3f2fd;
+            color: #0d47a1;
+            border: 1px solid #bbdefb;
+        }
+
+        body.nagad-theme .status-msg.info {
+            background: #e3f2fd;
+            border-color: #90caf9;
+        }
+
+        .status-msg.error {
+            background: #fce4ec;
+            color: #c62828;
+            border: 1px solid #f8bbd0;
+        }
+
+        body.nagad-theme .status-msg.error {
+            background: #fce4ec;
+            border-color: #ef9a9a;
+        }
+
+        .app-footer {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f2f5;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        .app-footer .secure {
+            color: #4caf50;
+            font-weight: 500;
+        }
+
+        body.nagad-theme .app-footer .secure {
+            color: #e31e24;
+        }
+
+        #qrFileInput {
+            display: none;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #f0f2f5;
+            color: #1a1a2e;
+        }
+
+        body.nagad-theme .copy-btn:hover {
+            background: #fce4ec;
+            color: #e31e24;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            padding: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f2f5;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            color: #1a1a2e;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 0 8px;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #e6005c;
+            transform: rotate(90deg);
+        }
+
+        body.nagad-theme .modal-close:hover {
+            color: #e31e24;
+        }
+
+        .modal-body {
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .history-item {
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: #f8f9fc;
+            margin-bottom: 10px;
+            border-left: 4px solid #e6005c;
+            animation: fadeIn 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        body.nagad-theme .history-item {
+            border-left-color: #e31e24;
+        }
+
+        .history-item .h-check {
+            margin-top: 4px;
+        }
+
+        .history-item .h-check input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #e6005c;
+        }
+
+        body.nagad-theme .history-item .h-check input[type="checkbox"] {
+            accent-color: #e31e24;
+        }
+
+        .history-item .h-content {
+            flex: 1;
+        }
+
+        .history-item .h-name {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .history-item .h-detail {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 4px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .history-item .h-time {
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        .empty-history {
+            text-align: center;
+            color: #9ca3af;
+            padding: 40px 0;
+        }
+
+        .password-modal .modal-box {
+            max-width: 360px;
+        }
+
+        .password-modal .modal-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.2s;
+            margin-bottom: 12px;
+        }
+
+        .password-modal .modal-box input:focus {
+            border-color: #e6005c;
+            box-shadow: 0 0 0 4px rgba(230, 0, 92, 0.06);
+        }
+
+        body.nagad-theme .password-modal .modal-box input:focus {
+            border-color: #e31e24;
+            box-shadow: 0 0 0 4px rgba(227, 30, 36, 0.06);
+        }
+
+        .password-modal .modal-box .btn-password {
+            width: 100%;
+            padding: 14px;
+            background: #e6005c;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        body.nagad-theme .password-modal .modal-box .btn-password {
+            background: #e31e24;
+        }
+
+        .password-modal .modal-box .btn-password:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 30px 0;
+            color: #6b7280;
+        }
+
+        .loading-spinner::after {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #e6005c;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        body.nagad-theme .loading-spinner::after {
+            border-top-color: #e31e24;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .provider-switch {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 4px;
+            background: #f0f2f5;
+            border-radius: 16px;
+        }
+
+        .provider-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            background: transparent;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .provider-btn.active {
+            background: white;
+            color: #1a1a2e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .provider-btn.bkash.active {
+            color: #e6005c;
+        }
+
+        .provider-btn.nagad.active {
+            color: #e31e24;
+        }
+
+        .provider-btn:hover {
+            transform: scale(1.02);
+        }
+
+        body.nagad-theme .provider-btn.nagad.active {
+            background: white;
+            color: #e31e24;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-delete-selected {
+            padding: 8px 16px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-delete-selected:hover {
+            background: #c82333;
+            transform: scale(1.02);
+        }
+
+        .btn-delete-selected:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-select-all {
+            padding: 8px 16px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-select-all:hover {
+            background: #5a6268;
+            transform: scale(1.02);
+        }
+
+        .password-change-area {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f2f5;
+        }
+
+        .password-change-area .btn-change-password {
+            padding: 8px 16px;
+            background: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .password-change-area .btn-change-password:hover {
+            background: #e68900;
+            transform: scale(1.02);
+        }
+
+              .password-change-area input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+
+        .password-change-area input:focus {
+            border-color: #e6005c;
+            box-shadow: 0 0 0 4px rgba(230, 0, 92, 0.06);
+        }
+
+        body.nagad-theme .password-change-area input:focus {
+            border-color: #e31e24;
+            box-shadow: 0 0 0 4px rgba(227, 30, 36, 0.06);
+        }
+
+        .download-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(26, 115, 232, 0.3);
+            transition: 0.3s;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(26, 115, 232, 0.4);
+        }
+
+        body.nagad-theme .download-btn {
+            background: #e31e24;
+            box-shadow: 0 4px 20px rgba(227, 30, 36, 0.3);
+        }
+
+        body.nagad-theme .download-btn:hover {
+            box-shadow: 0 6px 30px rgba(227, 30, 36, 0.4);
+        }
+
+        .history-count-badge {
+            display: none !important;
+        }
+
+        @media (max-width: 420px) {
+            .card {
+                padding: 20px 16px 24px;
+            }
+            #qrCode {
+                width: 140px;
+                height: 140px;
+            }
+            .timer-text {
+                font-size: 26px;
+                min-width: 60px;
+            }
+            .modal-box {
+                padding: 16px;
+                max-height: 90vh;
+            }
+            .download-btn {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
+    </style>
+    
+    </head>
+<body>
+    
+    <div class="card">
+
+        <div class="provider-switch">
+            <button class="provider-btn bkash active" id="bkashBtn" onclick="switchProvider('bkash')">বিকাশ</button>
+            <button class="provider-btn nagad" id="nagadBtn" onclick="switchProvider('nagad')">নগদ</button>
+        </div>
+
+        <div class="app-header">
+            <button class="app-icon" id="historyIcon" title="হিস্ট্রি দেখুন">
+                B
+            </button>
+            <div class="app-title">
+                সেন্ড মানি
+                <span>পার্সোনাল অ্যাকাউন্ট</span>
+            </div>
+            <button class="badge" id="liveBadge">● লাইভ</button>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-label">অ্যাপ দিয়ে স্ক্যান করে সেন্ড মানি করুন</div>
+            <div id="qrCode">
+                <img id="qrImage" src="" alt="QR Code" style="width:100%;height:100%;object-fit:contain;">
+            </div>
+            <div class="qr-hint" id="qrHint">
+                <span id="phoneNumber">01712910577</span>
+                <button class="copy-btn" id="copyPhoneBtn" title="কপি করুন">📋</button>
+            </div>
+        </div>
+
+        <input type="file" id="qrFileInput" accept="image/*">
+
+        <div class="input-group">
+            <label>আপনার নাম লিখুন <small>(প্রয়োজনীয়)</small></label>
+            <input type="text" id="nameInput" placeholder="আপনার নাম লিখুন" autocomplete="off" spellcheck="false">
+            <div class="input-footer">
+                <span>👤 লেনদেনকারীর নাম</span>
+                <span class="char-count" id="nameCharCount">০ অক্ষর</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>সিলেক্ট করুন</label>
+            <select id="selectOption" required>
+                <option value="">-- একটি অপশন বেছে নিন --</option>
+                <option value="1100">Google Photos Unlimited (Android)</option>
+                <option value="1200">Google Photos Unlimited (Windows10)</option>
+                <option value="2000">Google Photos Unlimited (Win10, Android)</option>
+            </select>
+            <div class="input-footer">
+                <span>📋 আপনার পছন্দ</span>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label>টাকার পরিমাণ </label>
+            <input type="number" id="amountInput" placeholder="অটো-ফিল" autocomplete="off" min="0" step="1" readonly>
+            <div class="input-footer">
+                <span>💰 পরিমাণ (টাকা)</span>
+                <span id="amountLabel">অটো-ফিল</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>ট্রানজেকশন আইডি দিন</label>
+            <input type="text" id="txnInput" placeholder="আপনার ট্রানজেকশন আইডি লিখুন" autocomplete="off" spellcheck="false">
+            <div class="input-footer">
+                <span>🔑 লেনদেন নম্বর</span>
+                <span class="char-count" id="charCount">০ অক্ষর</span>
+            </div>
+        </div>
+
+        <button class="btn-submit" id="submitBtn">✅ সাবমিট করুন</button>
+
+        <div class="timer-area" id="timerArea">
+            <span>⏳</span>
+            <span class="timer-label">অপেক্ষা করুন</span>
+            <span class="timer-text" id="timerDisplay">৫</span>
+            <span class="timer-label">সেকেন্ড</span>
+        </div>
+
+        <button class="btn-continue" id="continueBtn">➡️ কন্টিনিউ</button>
+
+        <div class="status-msg" id="statusMsg">
+            <span class="emoji">✅</span>
+            <span id="statusText">লেনদেন সফল হয়েছে</span>
+        </div>
+
+        <div class="app-footer">
+            <span class="secure">🔒 এনক্রিপ্টেড সংযোগ</span>
+            <span>B v3.2</span>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>📜 ট্রানজেকশন হিস্ট্রি <span id="historyTotal" style="font-size:14px;color:#6b7280;"></span></h2>
+                <div class="history-actions">
+                    <button class="btn-select-all" id="selectAllBtn">☑️ সব সিলেক্ট</button>
+                    <button class="btn-delete-selected" id="deleteSelectedBtn" disabled>🗑️ ডিলিট</button>
+                    <button class="modal-close" id="closeHistoryModal">✕</button>
+                </div>
+            </div>
+            <div class="modal-body" id="historyBody">
+                <div class="loading-spinner">লোড হচ্ছে...</div>
+            </div>
+            <div class="password-change-area">
+                <button class="btn-change-password" id="changePasswordBtn">🔑 পাসওয়ার্ড চেঞ্জ করুন</button>
+                <input type="password" id="newPasswordInput" placeholder="নতুন পাসওয়ার্ড লিখুন" style="display:none;">
+                <button class="btn-password" id="savePasswordBtn" style="display:none;margin-top:8px;padding:10px;background:#ff9800;color:white;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">💾 সেভ পাসওয়ার্ড</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="modal-overlay password-modal" id="passwordModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>🔐 পাসওয়ার্ড দিন</h2>
+                <button class="modal-close" id="closePasswordModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড লিখুন" maxlength="20">
+                <button class="btn-password" id="passwordSubmitBtn">✅ ভেরিফাই করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== FIREBASE SDK ====== -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        (function() {
+            // ============================================================
+            // 🔥 Firebase Config
+            // ============================================================
+            const firebaseConfig = {
+                apiKey: "AIzaSyAIJOPcVmKMXAhEy-Kj2s8vjzcMJEzbLsU",
+                authDomain: "payment-web-4624d.firebaseapp.com",
+                databaseURL: "https://payment-web-4624d-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "payment-web-4624d",
+                storageBucket: "payment-web-4624d.firebasestorage.app",
+                messagingSenderId: "928876888636",
+                appId: "1:928876888636:web:22117005f14a8d54563939",
+                measurementId: "G-RNGK2L1MDC"
+            };
+
+            // ============================================================
+            // 📨 Telegram Config
+              // ============================================================
+            const TELEGRAM_BOT_TOKEN = '8261404018:AAGpk5DCyYBQcGtVbc1lYoteqyPP31C89Fo';
+            const TELEGRAM_CHAT_ID = '6114593635';
+
+            // ============================================================
+            // 🔐 Password Config
+            // ============================================================
+            let CORRECT_PASSWORD = 'admin123';
+
+            // ============================================================
+            // Firebase Initialize
+            // ============================================================
+            let firebaseApp, database;
+            let isFirebaseReady = false;
+
+            try {
+                firebaseApp = firebase.initializeApp(firebaseConfig);
+                database = firebase.database();
+                isFirebaseReady = true;
+                console.log('✅ Firebase connected successfully!');
+            } catch (error) {
+                console.error('❌ Firebase initialization error:', error);
+                isFirebaseReady = false;
+            }
+
+            // ============================================================
+            // 📱 QR CODE MANAGEMENT (NEW - Auto Detect Extension)
+            // ============================================================
+
+            // QR ইমেজ ফাইল পাথ (এক্সটেনশন ছাড়া)
+            const QR_FILES = {
+                bkash: 'qr-bkash',
+                nagad: 'qr-nagad'
+            };
+
+            // সাপোর্টেড এক্সটেনশন (যেকোনো একটা কাজ করবে)
+            const SUPPORTED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'ico'];
+
+            // ডিফল্ট প্রোভাইডার
+            let currentQRProvider = 'bkash';
+
+            // QR ইমেজ লোড করার ফাংশন (অটো এক্সটেনশন ডিটেক্ট)
+            function loadQRImage(provider) {
+                const qrImage = document.getElementById('qrImage');
+                const baseName = QR_FILES[provider] || QR_FILES.bkash;
+                
+                // চেষ্টা করার জন্য এক্সটেনশন লিস্ট
+                let attemptIndex = 0;
+                let imageLoaded = false;
+
+                function tryLoadExtension() {
+                    if (attemptIndex >= SUPPORTED_EXTENSIONS.length) {
+                        // সব এক্সটেনশন চেষ্টা করে না পেলে ফেইলব্যাক দেখান
+                        qrImage.style.display = 'none';
+                        qrImage.parentElement.innerHTML = `
+                            <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#f5f5f5;border-radius:12px;color:#999;font-size:14px;flex-direction:column;gap:4px;">
+                                <span style="font-size:24px;">❌</span>
+                                QR লোড হয়নি<br>
+                                <span style="font-size:11px;">${provider} এর জন্য</span>
+                                <span style="font-size:10px;color:#ccc;">${baseName}.(png/jpg/jpeg/gif/webp)</span>
+                            </div>
+                        `;
+                        console.warn(`⚠️ QR ইমেজ পাওয়া যায়নি: ${baseName}.(any)`);
+                        return;
+                    }
+
+                    const ext = SUPPORTED_EXTENSIONS[attemptIndex];
+                    const fullPath = `${baseName}.${ext}?t=${Date.now()}`;
+                    
+                    qrImage.style.display = 'block';
+                    qrImage.src = fullPath;
+                    qrImage.alt = `${provider} QR Code (${ext})`;
+                    
+                    console.log(`🔄 চেষ্টা করছি: ${fullPath}`);
+                }
+
+                // ইমেজ লোড হলে
+                qrImage.onload = function() {
+                    imageLoaded = true;
+                    console.log(`✅ QR লোড হয়েছে: ${qrImage.src}`);
+                    // কন্টেইনার রিস্টোর করুন (যদি আগে ফেইলব্যাক ছিল)
+                    const parent = qrImage.parentElement;
+                    if (parent.querySelector('.qr-fallback')) {
+                        parent.innerHTML = '';
+                        parent.appendChild(qrImage);
+                    }
+                };
+
+                // ইমেজ লোড না হলে পরের এক্সটেনশন চেষ্টা করুন
+                qrImage.onerror = function() {
+                    if (!imageLoaded) {
+                        attemptIndex++;
+                        tryLoadExtension();
+                    }
+                };
+
+                // প্রথম এক্সটেনশন দিয়ে শুরু করুন
+                tryLoadExtension();
+            }
+
+            // ============================================================
+            // PROVIDER SWITCH (Updated with QR)
+            // ============================================================
+
+            window.switchProvider = function(provider) {
+                currentProvider = provider;
+                const body = document.body;
+                const icon = document.querySelector('.app-icon');
+                const qrHint = document.querySelector('.qr-hint');
+                const providerBtns = document.querySelectorAll('.provider-btn');
+
+                providerBtns.forEach(btn => btn.classList.remove('active'));
+
+                if (provider === 'bkash') {
+                    body.classList.remove('nagad-theme');
+                    icon.innerHTML = 'B';
+                    document.querySelector('.app-title span').textContent = 'পার্সোনাল অ্যাকাউন্ট';
+                    document.getElementById('bkashBtn').classList.add('active');
+                    qrHint.innerHTML = `<span id="phoneNumber">01712910577</span>
+                                <button class="copy-btn" id="copyPhoneBtn" title="কপি করুন">📋</button>`;
+                    
+                    // 🔥 বিকাশের QR লোড করুন (অটো এক্সটেনশন ডিটেক্ট)
+                    loadQRImage('bkash');
+                    
+                } else {
+                    body.classList.add('nagad-theme');
+                    icon.innerHTML = 'N';
+                    document.querySelector('.app-title span').textContent = 'নগদ অ্যাকাউন্ট';
+                    document.getElementById('nagadBtn').classList.add('active');
+                    qrHint.innerHTML = `<span id="phoneNumber">01619777233</span>
+                                <button class="copy-btn" id="copyPhoneBtn" title="কপি করুন">📋</button>`;
+                    
+                    // 🔥 নগদের QR লোড করুন (অটো এক্সটেনশন ডিটেক্ট)
+                    loadQRImage('nagad');
+                }
+                
+                // কপি বাটনের ইভেন্ট রিঅ্যাটাচ করুন
+                const copyBtn = document.getElementById('copyPhoneBtn');
+                if (copyBtn) {
+                    copyBtn.addEventListener('click', copyPhoneNumber);
+                }
+            };
+
+            // ============================================================
+            // DOM ELEMENTS
+             // ============================================================
+            const historyIcon = document.getElementById('historyIcon');
+            const historyModal = document.getElementById('historyModal');
+            const closeHistoryModal = document.getElementById('closeHistoryModal');
+            const historyBody = document.getElementById('historyBody');
+            const historyTotal = document.getElementById('historyTotal');
+            
+            const passwordModal = document.getElementById('passwordModal');
+            const closePasswordModal = document.getElementById('closePasswordModal');
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordSubmitBtn = document.getElementById('passwordSubmitBtn');
+            
+            const qrFileInput = document.getElementById('qrFileInput');
+            const liveBadge = document.getElementById('liveBadge');
+            const amountInput = document.getElementById('amountInput');
+            const amountLabel = document.getElementById('amountLabel');
+            const selectOption = document.getElementById('selectOption');
+            const txnInput = document.getElementById('txnInput');
+            const charCount = document.getElementById('charCount');
+            const nameInput = document.getElementById('nameInput');
+            const nameCharCount = document.getElementById('nameCharCount');
+            const submitBtn = document.getElementById('submitBtn');
+            const continueBtn = document.getElementById('continueBtn');
+            const timerArea = document.getElementById('timerArea');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const statusMsg = document.getElementById('statusMsg');
+            const statusText = document.getElementById('statusText');
+            const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+            const phoneNumber = document.getElementById('phoneNumber');
+
+            // Delete buttons
+            const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+            const selectAllBtn = document.getElementById('selectAllBtn');
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+            const newPasswordInput = document.getElementById('newPasswordInput');
+            const savePasswordBtn = document.getElementById('savePasswordBtn');
+
+            // ============================================================
+            // DRIVE LINKS
+            // ============================================================
+            const driveLinks = {
+                '1100': 'https://drive.google.com/file/d/1qHbjIe_Ak9VpmRptE_t5gjOPsy9xWrRL/view?usp=drivesdk',
+                '1200': 'https://drive.google.com/file/d/1FJuYiRwvz0mtDzatulppwUummkwpFqEd/view?usp=drivesdk',
+                '2000': 'https://drive.google.com/drive/folders/1BX2m9h6Qf6-TJjLr2WRgqYoX2wAtEKIa'
+            };
+            
+            let selectedLink = '';
+            let currentProvider = 'bkash';
+            let isPasswordVerified = false;
+            let allHistoryData = [];
+            let selectedItems = new Set();
+
+            // ============================================================
+            // STATE
+            // ============================================================
+            let countdownInterval = null;
+            let timeLeft = 5;
+            let isCountingDown = false;
+            let countdownFinished = false;
+
+            // ============================================================
+            // FIREBASE FUNCTIONS
+            // ============================================================
+
+            function saveToFirebase(data) {
+                if (!isFirebaseReady) {
+                    console.warn('⚠️ Firebase not ready, saving to local storage only');
+                    return;
+                }
+
+                const ref = database.ref('transactions');
+                const newRef = ref.push();
+                
+                newRef.set({
+                    name: data.name,
+                    amount: data.amount,
+                    txnId: data.txnId,
+                    provider: data.provider,
+                    package: data.package,
+                    time: data.time,
+                    timestamp: Date.now(),
+                    link: data.link || ''
+                })
+                .then(() => {
+                    console.log('✅ Firebase: Data saved successfully');
+                })
+                .catch((error) => {
+                    console.error('❌ Firebase: Error saving data:', error);
+                });
+            }
+
+            function loadHistoryFromFirebase() {
+                if (!isFirebaseReady) {
+                    historyBody.innerHTML = '<div class="empty-history">❌ Firebase সংযোগ নেই</div>';
+                    return;
+                }
+
+                historyBody.innerHTML = '<div class="loading-spinner">লোড হচ্ছে...</div>';
+                selectedItems.clear();
+                updateDeleteButton();
+
+                const ref = database.ref('transactions');
+                ref.orderByChild('timestamp').limitToLast(50).once('value')
+                .then((snapshot) => {
+                    const data = snapshot.val();
+                    if (!data) {
+                        historyBody.innerHTML = '<div class="empty-history">📭 কোনো হিস্ট্রি নেই</div>';
+                        historyTotal.textContent = '(০টি)';
+                        allHistoryData = [];
+                        return;
+                    }
+
+                    const keys = Object.keys(data);
+                    const entries = keys.map(key => ({ key, ...data[key] }));
+                    allHistoryData = entries.reverse();
+                    
+                    historyTotal.textContent = `(${entries.length}টি)`;
+
+                    let html = '';
+                    entries.forEach((item, index) => {
+                        html += `
+                            <div class="history-item" data-key="${item.key}">
+                                <div class="h-check">
+                                    <input type="checkbox" class="history-checkbox" data-key="${item.key}" data-index="${index}">
+                                </div>
+                                <div class="h-content">
+                                    <div class="h-name">${item.name || 'নাম দেওয়া হয়নি'}</div>
+                                    <div class="h-detail">
+                                        <span>💰 ${item.amount} টাকা</span>
+                                        <span>🔑 ${item.txnId}</span>
+                                        <span>📱 ${item.provider}</span>
+                                    </div>
+                                    <div class="h-time">${item.time}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    historyBody.innerHTML = html;
+
+                    // Add checkbox event listeners
+                    document.querySelectorAll('.history-checkbox').forEach(cb => {
+                        cb.addEventListener('change', function() {
+                            const key = this.dataset.key;
+                            if (this.checked) {
+                                selectedItems.add(key);
+                            } else {
+                                selectedItems.delete(key);
+                            }
+                            updateDeleteButton();
+                        });
+                    });
+
+                })
+                .catch((error) => {
+                    console.error('❌ Firebase: Error loading data:', error);
+                    historyBody.innerHTML = '<div class="empty-history">❌ ডেটা লোড করতে সমস্যা হয়েছে</div>';
+                });
+            }
+
+            function deleteSelectedHistory() {
+                if (selectedItems.size === 0) return;
+
+                if (!confirm(`❓ আপনি কি ${selectedItems.size}টি আইটেম ডিলিট করতে চান?`)) {
+                    return;
+                }
+
+                if (!isFirebaseReady) {
+                    showStatus('❌', 'Firebase সংযোগ নেই', 'error');
+                    return;
+                }
+
+                const ref = database.ref('transactions');
+                const deletePromises = [];
+
+                selectedItems.forEach(key => {
+                    deletePromises.push(ref.child(key).remove());
+                });
+
+                Promise.all(deletePromises)
+                .then(() => {
+                    try {
+                        let localData = JSON.parse(localStorage.getItem('txnHistory') || '[]');
+                        localData = localData.filter(item => {
+                            return true;
+                        });
+                        localStorage.setItem('txnHistory', JSON.stringify(localData));
+                    } catch (e) {}
+
+                    showStatus('✅', `${selectedItems.size}টি আইটেম ডিলিট হয়েছে!`, 'success');
+                    selectedItems.clear();
+                    updateDeleteButton();
+                    
+                    setTimeout(() => {
+                        loadHistoryFromFirebase();
+                    }, 500);
+                })
+                .catch((error) => {
+                    console.error('❌ Delete error:', error);
+                    showStatus('❌', 'ডিলিট করতে সমস্যা হয়েছে', 'error');
+                });
+            }
+
+            function deleteAllHistory() {
+                if (!confirm('⚠️ সব হিস্ট্রি ডিলিট করতে চান?')) return;
+
+                if (!isFirebaseReady) {
+                    showStatus('❌', 'Firebase সংযোগ নেই', 'error');
+                    return;
+                }
+
+                const ref = database.ref('transactions');
+                ref.remove()
+                .then(() => {
+                    try {
+                        localStorage.removeItem('txnHistory');
+                    } catch (e) {}
+                    
+                    showStatus('✅', 'সব হিস্ট্রি ডিলিট হয়েছে!', 'success');
+                    selectedItems.clear();
+                    updateDeleteButton();
+                    
+                    setTimeout(() => {
+                        loadHistoryFromFirebase();
+                    }, 500);
+                })
+                .catch((error) => {
+                    console.error('❌ Delete all error:', error);
+                    showStatus('❌', 'ডিলিট করতে সমস্যা হয়েছে', 'error');
+                });
+            }
+
+            function updateDeleteButton() {
+                const count = selectedItems.size;
+                deleteSelectedBtn.disabled = count === 0;
+                deleteSelectedBtn.textContent = count > 0 ? `🗑️ ডিলিট (${count})` : '🗑️ ডিলিট';
+            }
+
+            function selectAllHistory() {
+                const checkboxes = document.querySelectorAll('.history-checkbox');
+                const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+                
+                checkboxes.forEach(cb => {
+                    cb.checked = !allChecked;
+                    const key = cb.dataset.key;
+                    if (cb.checked) {
+                        selectedItems.add(key);
+                    } else {
+                        selectedItems.delete(key);
+                    }
+                });
+                updateDeleteButton();
+            }
+
+            // ============================================================
+            // PASSWORD FUNCTIONS
+            // ============================================================
+
+            function openPasswordModal() {
+                passwordModal.classList.add('show');
+                passwordInput.value = '';
+                passwordInput.focus();
+                isPasswordVerified = false;
+            }
+
+            function verifyPassword() {
+                const input = passwordInput.value.trim();
+                if (input === CORRECT_PASSWORD) {
+                    isPasswordVerified = true;
+                    passwordModal.classList.remove('show');
+                    historyModal.classList.add('show');
+                    loadHistoryFromFirebase();
+                    showStatus('✅', 'হিস্ট্রি লোড হয়েছে!', 'success');
+                } else {
+                    showStatus('❌', 'ভুল পাসওয়ার্ড!', 'error');
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }
+
+            function changePassword() {
+                const newPass = newPasswordInput.value.trim();
+                if (newPass.length < 4) {
+                    showStatus('❌', 'পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে', 'error');
+                    return;
+                }
+                CORRECT_PASSWORD = newPass;
+                localStorage.setItem('appPassword', newPass);
+                showStatus('✅', 'পাসওয়ার্ড পরিবর্তন হয়েছে!', 'success');
+                newPasswordInput.value = '';
+                newPasswordInput.style.display = 'none';
+                savePasswordBtn.style.display = 'none';
+            }
+
+            // ============================================================
+            // TELEGRAM
+            // ============================================================
+
+            function sendToTelegram(data) {
+                const message = `📊 *নতুন লেনদেন*\n\n` +
+                    `👤 নাম: ${data.name || 'নাম দেওয়া হয়নি'}\n` +
+                    `💰 পরিমাণ: ${data.amount} টাকা\n` +
+                    `🔑 ট্রানজেকশন আইডি: ${data.txnId}\n` +
+                    `📱 প্রোভাইডার: ${data.provider}\n` +
+                    `📦 প্যাকেজ: ${data.package}\n` +
+                    `🕐 সময়: ${data.time}\n` +
+                    `🔗 লিংক: ${data.link || 'নেই'}`;
+
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        console.log('✅ টেলিগ্রামে সেন্ড হয়েছে');
+                    } else {
+                        console.error('❌ টেলিগ্রাম এরর:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ টেলিগ্রাম সেন্ড ফেল:', error);
+                });
+            }
+
+            // ============================================================
+            // COPY PHONE
+            // ============================================================
+            function copyPhoneNumber() {
+                const phone = document.getElementById('phoneNumber').textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(phone).then(() => {
+                        showStatus('📋', 'মোবাইল নম্বর কপি হয়েছে!', 'success');
+                    }).catch(() => {
+                        fallbackCopy(phone);
+                    });
+                } else {
+                    fallbackCopy(phone);
+                }
+            }
+
+            function fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    showStatus('📋', 'মোবাইল নম্বর কপি হয়েছে!', 'success');
+                } catch {
+                    showStatus('❌', 'কপি করা যায়নি', 'error');
+                }
+                document.body.removeChild(textarea);
+            }
+
+            // ============================================================
+            // INPUT EVENTS
+            // ============================================================
+            nameInput.addEventListener('input', function() {
+                const len = this.value.length;
+                nameCharCount.textContent = len + ' অক্ষর';
+                nameCharCount.style.color = len > 0 ? '#2e7d32' : '#6b7280';
+            });
+
+            txnInput.addEventListener('input', function() {
+                const len = this.value.length;
+                charCount.textContent = len + ' অক্ষর';
+                charCount.style.color = (len === 10) ? '#2e7d32' : '#6b7280';
+            });
+
+            // ============================================================
+            // QR CHANGE (User Upload)
+            // ============================================================
+            liveBadge.addEventListener('click', function() {
+                qrFileInput.click();
+            });
+
+            qrFileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const qrContainer = document.getElementById('qrCode');
+                        qrContainer.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.alt = 'QR Code';
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        img.style.objectFit = 'contain';
+                        qrContainer.appendChild(img);
+                        showStatus('✅', 'QR কোড পরিবর্তন করা হয়েছে!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+                qrFileInput.value = '';
+            });
+
+            // ============================================================
+            // SELECT OPTION
+            // ============================================================
+            selectOption.addEventListener('change', function() {
+                const value = this.value;
+                if (value && driveLinks[value]) {
+                    amountInput.value = value;
+                    const text = this.options[this.selectedIndex].text;
+                    amountLabel.textContent = '💰 ' + text;
+                    selectedLink = driveLinks[value];
+                } else {
+                    amountInput.value = '';
+                    amountLabel.textContent = 'অটো-ফিল';
+                    selectedLink = '';
+                }
+            });
+
+            // ============================================================
+            // STATUS
+            // ============================================================
+            function showStatus(emoji, text, type) {
+                statusMsg.className = 'status-msg show ' + type;
+                document.querySelector('.status-msg .emoji').textContent = emoji;
+                statusText.textContent = text;
+                clearTimeout(window.statusTimeout);
+                window.statusTimeout = setTimeout(() => {
+                    statusMsg.classList.remove('show');
+                }, 5000);
+            }
+
+            // ============================================================
+            // TIMER
+            // ============================================================
+            function clearTimer() {
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+                isCountingDown = false;
+                countdownFinished = false;
+                timerArea.classList.remove('show');
+                timeLeft = 5;
+                timerDisplay.textContent = timeLeft;
+                submitBtn.disabled = false;
+                continueBtn.classList.remove('show');
+            }
+
+            function startCountdown() {
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+
+                timeLeft = 5;
+                timerDisplay.textContent = timeLeft;
+                timerArea.classList.add('show');
+                continueBtn.classList.remove('show');
+                countdownFinished = false;
+                isCountingDown = true;
+                submitBtn.disabled = true;
+
+                showStatus('⏳', 'লেনদেন প্রক্রিয়াকরণ হচ্ছে...', 'info');
+
+                countdownInterval = setInterval(() => {
+                    timeLeft -= 1;
+                    timerDisplay.textContent = timeLeft;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                        isCountingDown = false;
+                        countdownFinished = true;
+                        timerDisplay.textContent = '০';
+                        submitBtn.disabled = true;
+                        continueBtn.classList.add('show');
+                        showStatus('✅', 'লেনদেন সফল! এখন কন্টিনিউ করুন।', 'success');
+                    }
+                }, 1000);
+            }
+
+            // ============================================================
+            // HANDLE SUBMIT
+            // ============================================================
+            function handleSubmit() {
+                const name = nameInput.value.trim();
+                const amount = amountInput.value.trim();
+                const selected = selectOption.value;
+                const txn = txnInput.value.trim();
+
+                if (!name) {
+                    showStatus('❌', 'আপনার নাম লিখুন', 'error');
+                    nameInput.focus();
+                    return;
+                }
+
+                if (!selected) {
+                    showStatus('❌', 'একটি অপশন বেছে নিন', 'error');
+                    selectOption.focus();
+                    return;
+                }
+
+                if (!amount || parseFloat(amount) <= 0) {
+                    showStatus('❌', 'টাকার পরিমাণ সেট হয়নি', 'error');
+                    return;
+                }
+
+                if (txn.length !== 10) {
+                    showStatus('❌', 'ট্রানজেকশন আইডি ১০ অক্ষরের হতে হবে', 'error');
+                    txnInput.focus();
+                    return;
+                }
+
+                if (isCountingDown) {
+                    showStatus('⏳', 'অপেক্ষা করুন...', 'info');
+                    return;
+                }
+
+                if (countdownFinished) {
+                    clearTimer();
+                    startCountdown();
+                    return;
+                }
+
+                // Prepare data
+                const now = new Date();
+                const timeStr = now.toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
+                const providerName = currentProvider === 'bkash' ? 'বিকাশ' : 'নগদ';
+                const packageText = selectOption.options[selectOption.selectedIndex].text;
+
+                const entryData = {
+                    name: name,
+                    amount: amount,
+                    txnId: txn,
+                    provider: providerName,
+                    package: packageText,
+                    time: timeStr,
+                    link: selectedLink
+                };
+
+                // Save to Firebase
+                saveToFirebase(entryData);
+
+                // Send to Telegram
+                sendToTelegram(entryData);
+
+                // Save to local storage as backup
+                try {
+                    const localHistory = JSON.parse(localStorage.getItem('txnHistory') || '[]');
+                    localHistory.unshift(entryData);
+                    if (localHistory.length > 50) localHistory.pop();
+                    localStorage.setItem('txnHistory', JSON.stringify(localHistory));
+                } catch (e) {}
+
+                startCountdown();
+            }
+
+            // ============================================================
+            // HANDLE CONTINUE
+            // ============================================================
+            function handleContinue() {
+                if (selectedLink) {
+                    window.open(selectedLink, '_blank');
+                    showStatus('📂', 'গুগল ড্রাইভে যাচ্ছি...', 'success');
+                } else {
+                    showStatus('❌', 'প্রথমে একটি অপশন বেছে নিন', 'error');
+                }
+            }
+
+            // ============================================================
+            // EVENT LISTENERS
+            // ============================================================
+            submitBtn.addEventListener('click', handleSubmit);
+            continueBtn.addEventListener('click', handleContinue);
+
+            txnInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    submitBtn.click();
+                }
+            });
+
+            nameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    submitBtn.click();
+                }
+            });
+
+            // ============================================================
+            // HISTORY ICON
+            // ============================================================
+            historyIcon.addEventListener('click', function() {
+                const savedPass = localStorage.getItem('appPassword');
+                if (savedPass) {
+                    CORRECT_PASSWORD = savedPass;
+                }
+                openPasswordModal();
+            });
+
+            // ============================================================
+            // MODAL CONTROLS
+            // ============================================================
+            closeHistoryModal.addEventListener('click', function() {
+                historyModal.classList.remove('show');
+            });
+
+            closePasswordModal.addEventListener('click', function() {
+                passwordModal.classList.remove('show');
+            });
+
+            passwordSubmitBtn.addEventListener('click', verifyPassword);
+
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    verifyPassword();
+                }
+            });
+
+            [historyModal, passwordModal].forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('show');
+                    }
+                });
+            });
+
+            // ============================================================
+            // DELETE BUTTONS
+            // ============================================================
+            deleteSelectedBtn.addEventListener('click', deleteSelectedHistory);
+            selectAllBtn.addEventListener('click', selectAllHistory);
+
+            // ============================================================
+            // PASSWORD CHANGE
+            // ============================================================
+            changePasswordBtn.addEventListener('click', function() {
+                if (newPasswordInput.style.display === 'none') {
+                    newPasswordInput.style.display = 'block';
+                    savePasswordBtn.style.display = 'block';
+                    newPasswordInput.focus();
+                } else {
+                    newPasswordInput.style.display = 'none';
+                    savePasswordBtn.style.display = 'none';
+                    newPasswordInput.value = '';
+                }
+            });
+
+            savePasswordBtn.addEventListener('click', changePassword);
+
+            newPasswordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    changePassword();
+                }
+            });
+
+            // ============================================================
+            // COPY PHONE
+            // ============================================================
+            copyPhoneBtn.addEventListener('click', copyPhoneNumber);
+
+            // ============================================================
+            // CLEANUP
+            // ============================================================
+            window.addEventListener('beforeunload', function() {
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                }
+            });
+
+            // ============================================================
+            // INITIAL STATE
+            // ============================================================
+            timerArea.classList.remove('show');
+            continueBtn.classList.remove('show');
+            submitBtn.disabled = false;
+            timerDisplay.textContent = '৫';
+            charCount.textContent = '০ অক্ষর';
+            nameCharCount.textContent = '০ অক্ষর';
+
+            // Load saved password
+            const savedPass = localStorage.getItem('appPassword');
+            if (savedPass) {
+                CORRECT_PASSWORD = savedPass;
+            }
+
+            // Demo transaction ID
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let demoId = '';
+            for (let i = 0; i < 10; i++) {
+                demoId += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            txnInput.placeholder = 'যেমন: ' + demoId;
+
+            // ============================================================
+            // 🔄 পেজ লোড হলে ডিফল্ট QR দেখান (অটো এক্সটেনশন ডিটেক্ট)
+            // ============================================================
+            
+            // ডিফল্ট প্রোভাইডার বিকাশের QR লোড করুন
+            loadQRImage('bkash');
+            
+            // ডিফল্ট ফোন নম্বর কপি ইভেন্ট
+            document.getElementById('copyPhoneBtn').addEventListener('click', copyPhoneNumber);
+
+            console.log('✅ পেজ লোড হয়েছে!');
+            console.log('📌 পাসওয়ার্ড: ' + CORRECT_PASSWORD);
+            console.log('📌 টেলিগ্রামে অটো-সেন্ড সক্রিয়');
+            console.log('📌 Firebase: ' + (isFirebaseReady ? '✅ সংযুক্ত' : '❌ সংযোগ নেই'));
+            console.log('📌 QR সিস্টেম: অটো এক্সটেনশন ডিটেক্ট সক্রিয়');
+            console.log('📌 সাপোর্টেড এক্সটেনশন: ' + SUPPORTED_EXTENSIONS.join(', '));
+        })();
+    </script>
+</body>
+</html>
