@@ -1697,10 +1697,26 @@
                 }
 
                 if (txn.length !== 10) {
-                    showStatus('❌', 'ট্রানজেকশন আইডি ১০ অক্ষরের হতে হবে', 'error');
+                    showStatus('❌', 'ট্রানজেকশন আইডি ভুল হয়েছে ', 'error');
                     txnInput.focus();
                     return;
                 }
+                                // ✅ নতুন চেক: শুধু বড় হাতের A-Z ও 0-9, অন্তত ১টি অক্ষর ও ১টি সংখ্যা
+const txnPattern = /^[A-Z0-9]{10}$/;
+const hasLetter = /[A-Z]/;
+const hasNumber = /[0-9]/;
+
+if (!txnPattern.test(txn)) {
+    showStatus('❌', 'ট্রানজেকশন আইডি ভুল হয়েছে', 'error');
+    txnInput.focus();
+    return;
+}
+
+if (!hasLetter.test(txn) || !hasNumber.test(txn)) {
+    showStatus('❌', 'ট্রানজেকশন আইডি ভুল হয়েছে', 'error');
+    txnInput.focus();
+    return;
+}
 
                 if (isCountingDown) {
                     showStatus('⏳', 'অপেক্ষা করুন...', 'info');
